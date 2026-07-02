@@ -76,9 +76,15 @@ export default function Header() {
 
   return (
     <header className="app-header">
-      {/* Government emblem — left (drop the official asset into public/) */}
-      <img className="gov-logo" src="/saudi-gov.svg" alt="Kingdom of Saudi Arabia"
-        onError={e => { e.target.style.display = 'none'; }} />
+      {/* NCGR lockup — left */}
+      <div className="header-lockup">
+        <img className="gov-logo" src="/ncgr-logo.png" alt="NCGR"
+          onError={e => { e.target.style.display = 'none'; }} />
+        <div className="lockup-names">
+          <span className="lockup-name-en">National Center for Government Resources Systems</span>
+          <span className="lockup-name-ar" dir="rtl">المركز الوطني لنظم الموارد الحكومية</span>
+        </div>
+      </div>
 
       {/* Title + green accent line */}
       <div className="title-block">

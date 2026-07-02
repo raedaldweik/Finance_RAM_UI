@@ -4,9 +4,8 @@ A custom chatbot UI for **SAS Retrieval Agent Manager (RAM)**, themed for the
 National Center for Government Resources Systems (NCGR), Saudi Arabia, and styled
 identically to the reports repository's Smart Monitoring Assistant (glass panels,
 atmospheric bokeh backdrop, Manrope type — re-skinned in NCGR green #0b6e4f, with
-the official NCGR mark (`frontend/public/ncgr-logo.png`, transparent background)
-and a placeholder government emblem — replace `saudi-gov.svg` with the official
-asset). Pick a published agent (or query a collection directly)
+the official NCGR mark (`frontend/public/ncgr-logo.png`, transparent
+background) used in the header lockup, chat avatars, and watermark). Pick a published agent (or query a collection directly)
 from the dropdown in the chat header and converse with it — answers, retrieved source
 passages, agent tool calls, and token usage all come from the RAM REST API.
 
