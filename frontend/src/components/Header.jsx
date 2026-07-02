@@ -109,8 +109,8 @@ export default function Header() {
             Sign in
           </button>
         )}
-        {/* NCGR logo — far right (drop the official asset into public/) */}
-        <img className="org-logo" src="/ncgr-logo.svg" alt="NCGR"
+        {/* NCGR logo — far right */}
+        <img className="org-logo" src="/ncgr-logo.png" alt="NCGR"
           onError={e => { e.target.style.display = 'none'; }} />
       </div>
 
@@ -121,7 +121,7 @@ export default function Header() {
           <div className="glass-card w-full max-w-[440px] p-7 animate-slide-up"
             style={{ background: 'rgba(255,255,255,0.95)' }}>
             <div className="flex items-center gap-3 mb-5">
-              <img src="/ncgr-logo.svg" alt="" className="w-10 h-10 rounded-lg" />
+              <img src="/ncgr-logo.png" alt="" className="w-10 h-10 rounded-lg" />
               <div>
                 <p className="text-sm font-bold" style={{ color: 'var(--text)' }}>Sign in to your assistant</p>
                 <p className="text-[11px]" style={{ color: 'var(--text-dim)' }}>
