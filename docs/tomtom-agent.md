@@ -1,9 +1,12 @@
-# TomTom Agent — interactive maps in the RTA RAM UI
+# TomTom Agent — interactive maps in the NCGR RAM UI
 
-This is the third RTA agent (after the legal RAG assistant and the SAS data‑science
+> Legacy/optional: the TomTom agent is not part of the NCGR bootcamp line-up,
+> but the map rendering support remains in the UI and works as described here.
+
+This is an optional maps agent (alongside the RAG assistants and the SAS data‑science
 agent). It gives the agent live geospatial powers — geocoding, routing, traffic
 incidents, POIs, isochrones — and renders the result as a **pretty, interactive,
-RTA‑themed map** inside this custom UI.
+NCGR‑themed map** inside this custom UI.
 
 ## How it works
 
@@ -19,8 +22,8 @@ RAM returns answer + toolCalls  ──►  this UI  ──►  MapCard (MapLibre
   emits a **spec** via `tomtom-render-map` instead of a picture. The custom UI
   picks the spec out of the tool‑call output (`extractMapSpec`) and draws a live
   map (`MapCard.jsx`) — the same idea as the SAS `render_chart` flow.
-- The map is themed to match the UI (pearl/glass chrome, RTA‑red routes & markers,
-  glass popups), defaults to Dubai, and is bounded to the UAE.
+- The map is themed to match the UI (pearl/glass chrome, NCGR‑green routes & markers,
+  glass popups); region defaults come from the server spec (the mock uses Riyadh / Saudi Arabia).
 
 ## 1. Register the TomTom MCP in RAM
 
@@ -33,18 +36,18 @@ Self‑host the TomTom MCP (`tomtom-maps-mcp`, HTTP mode) and add it in RAM as a
   Orbis tool set (EV routing, search‑along‑route, area‑search, data‑viz) or leave
   default for standard TomTom Maps. `tomtom-render-map` is available on **both**.
 
-## 2. Scope the agent to Dubai / UAE
+## 2. Scope the agent to your region
 
 Two layers (both already biased to the UAE):
 
-1. **Server‑side** — `tomtom-render-map` defaults the map view to Dubai and bounds
+1. **Server‑side** — `tomtom-render-map` defaults the map view to your configured region and bounds
    it to the UAE.
 2. **Agent prompt** — add to the agent's system prompt so the data tools stay in
    region:
 
-   > You are an RTA mobility assistant for Dubai and the UAE. When calling TomTom
+   > You are a mobility assistant for Riyadh and Saudi Arabia. When calling TomTom
    > search/geocoding tools, restrict results to the UAE (`countrySet=ARE`) and bias
-   > toward Dubai. After gathering coordinates/routes/incidents, **always call
+   > toward Riyadh. After gathering coordinates/routes/incidents, **always call
    > `tomtom-render-map`** to show the result as an interactive map. Prefer it over
    > `tomtom-static-map` / `tomtom-dynamic-map`.
 
@@ -63,6 +66,6 @@ cd backend  && RAM_MOCK=true uvicorn main:app --reload --port 8000
 cd frontend && npm install && npm run dev
 ```
 
-Ask the mock anything map‑related ("route from Burj Khalifa to Dubai Marina",
-"traffic near Downtown") and the UI renders the sample Dubai map (route + markers +
+Ask the mock anything map‑related ("route from KAFD to the Diplomatic Quarter",
+"traffic near Olaya") and the UI renders the sample Riyadh map (route + markers +
 incident + traffic toggle). Set `VITE_TOMTOM_API_KEY` to see the basemap tiles.

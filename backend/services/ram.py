@@ -631,32 +631,32 @@ _mock_sessions: dict[str, dict] = {}
 _mock_traces: dict[str, dict] = {}  # queryId → {"/toolCalls": [...], "/llmCalls": [...], "/retrievalCalls": [...]}
 
 
-def _mock_dubai_map_spec() -> dict:
-    """A sample tomtom-render-map spec (Burj Khalifa → Dubai Marina) so the
-    interactive MapCard renders in mock mode. Mirrors the MCP handler output."""
+def _mock_riyadh_map_spec() -> dict:
+    """A sample tomtom-render-map spec (KAFD → Diplomatic Quarter, Riyadh) so
+    the interactive MapCard renders in mock mode. Mirrors the MCP handler output."""
     return {
-        "kind": "tomtom.map", "version": 1, "region": "AE",
-        "title": "Burj Khalifa → Dubai Marina",
-        "center": {"lat": 25.14, "lon": 55.21}, "zoom": 11, "pitch": 45, "bearing": -18,
-        "maxBounds": [51.0, 22.5, 56.5, 26.2],
+        "kind": "tomtom.map", "version": 1, "region": "SA",
+        "title": "KAFD → Diplomatic Quarter",
+        "center": {"lat": 24.72, "lon": 46.65}, "zoom": 11, "pitch": 45, "bearing": -18,
+        "maxBounds": [45.9, 24.2, 47.4, 25.2],
         "markers": [
-            {"lat": 25.1972, "lon": 55.2744, "label": "Burj Khalifa", "description": "Downtown Dubai"},
-            {"lat": 25.0805, "lon": 55.1403, "label": "Dubai Marina", "description": "Destination"},
-            {"lat": 25.1126, "lon": 55.1380, "label": "Mall of the Emirates",
-             "category": "Shopping", "color": "#0e7490"},
+            {"lat": 24.7670, "lon": 46.6430, "label": "KAFD", "description": "King Abdullah Financial District"},
+            {"lat": 24.6740, "lon": 46.6220, "label": "Diplomatic Quarter", "description": "Destination"},
+            {"lat": 24.7116, "lon": 46.6744, "label": "Kingdom Centre",
+             "category": "Landmark", "color": "#0e7490"},
         ],
         "routes": [{
-            "label": "Fastest route", "color": "#b91c2c",
-            "distanceMeters": 21500, "travelTimeSeconds": 1320,
+            "label": "Fastest route", "color": "#0b6e4f",
+            "distanceMeters": 14800, "travelTimeSeconds": 1080,
             "points": [
-                {"lat": 25.1972, "lon": 55.2744}, {"lat": 25.1850, "lon": 55.2600},
-                {"lat": 25.1500, "lon": 55.2300}, {"lat": 25.1300, "lon": 55.1950},
-                {"lat": 25.1100, "lon": 55.1700}, {"lat": 25.0805, "lon": 55.1403},
+                {"lat": 24.7670, "lon": 46.6430}, {"lat": 24.7500, "lon": 46.6500},
+                {"lat": 24.7300, "lon": 46.6550}, {"lat": 24.7100, "lon": 46.6480},
+                {"lat": 24.6900, "lon": 46.6350}, {"lat": 24.6740, "lon": 46.6220},
             ],
         }],
         "incidents": [{
-            "lat": 25.1600, "lon": 55.2380, "type": "Accident", "severity": "major",
-            "description": "Collision blocking 2 lanes on Sheikh Zayed Road",
+            "lat": 24.7290, "lon": 46.6540, "type": "Accident", "severity": "major",
+            "description": "Collision blocking 2 lanes on King Fahd Road",
         }],
         "areas": [],
         "showTraffic": True, "autoFit": True,
@@ -693,20 +693,20 @@ async def _mock_request(method: str, path: str, *, params: dict | None = None, j
         target_name = agent["name"] if agent else "the selected collections"
 
         # If the question looks map/route/traffic-related, simulate a TomTom
-        # agent: answer + a `tomtom-render-map` tool call carrying a Dubai spec,
+        # agent: answer + a `tomtom-render-map` tool call carrying a Riyadh spec,
         # so the interactive MapCard renders in mock mode.
         content_lc = (json["content"] or "").lower()
         map_words = ("map", "route", "traffic", "directions", "navigate", "where", "near",
-                     "dubai", "marina", "burj", "drive", "road", "location")
+                     "riyadh", "kafd", "olaya", "drive", "road", "location")
         if any(w in content_lc for w in map_words):
-            map_spec = _mock_dubai_map_spec()
+            map_spec = _mock_riyadh_map_spec()
             answer = (f"**[Mock TomTom response from {target_name}]**\n\nHere's the fastest route across "
-                      "Dubai with live traffic. There's one incident reported on Sheikh Zayed Road. "
+                      "Riyadh with live traffic. There's one incident reported on King Fahd Road. "
                       "Unset `RAM_MOCK` and connect the TomTom MCP agent for real data.")
             tool_calls = [
                 {"toolName": "tomtom-routing",
-                 "input": {"origin": "Burj Khalifa", "destination": "Dubai Marina"},
-                 "output": {"summary": {"lengthInMeters": 21500, "travelTimeInSeconds": 1320}}},
+                 "input": {"origin": "KAFD", "destination": "Diplomatic Quarter"},
+                 "output": {"summary": {"lengthInMeters": 14800, "travelTimeInSeconds": 1080}}},
                 {"toolName": "tomtom-render-map",
                  "input": {"title": map_spec["title"]},
                  "output": map_spec},

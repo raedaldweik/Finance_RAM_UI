@@ -1,9 +1,12 @@
-# RTA Retrieval Agent Assistant
+# NCGR Retrieval Agent Assistant
 
-A custom chatbot UI for **SAS Retrieval Agent Manager (RAM)**, themed for RTA
-and styled identically to the reports repository's Smart Monitoring Assistant (glass panels,
-atmospheric bokeh backdrop, Manrope type — re-skinned in RTA red #b91c2c, with the
-Government of Dubai and RTA logos). Pick a published agent (or query a collection directly)
+A custom chatbot UI for **SAS Retrieval Agent Manager (RAM)**, themed for the
+National Center for Government Resources Systems (NCGR), Saudi Arabia, and styled
+identically to the reports repository's Smart Monitoring Assistant (glass panels,
+atmospheric bokeh backdrop, Manrope type — re-skinned in NCGR green #0b6e4f, with
+placeholder Saudi government and NCGR marks in `frontend/public/` — replace
+`ncgr-logo.svg` / `saudi-gov.svg` with the official assets). Pick a published
+agent (or query a collection directly)
 from the dropdown in the chat header and converse with it — answers, retrieved source
 passages, agent tool calls, and token usage all come from the RAM REST API.
 
@@ -33,14 +36,14 @@ passages, agent tool calls, and token usage all come from the RAM REST API.
   auto-refreshed via SASLogon OAuth) and proxies all RAM calls, so the token never
   reaches the browser and CORS is a non-issue.
 - **Interactive maps (TomTom agent)** — when an agent calls the TomTom MCP's
-  `tomtom-render-map` tool, the answer renders a pretty, RTA-themed interactive map
-  (MapLibre GL) with routes, markers, traffic incidents, and isochrones — Dubai-
+  `tomtom-render-map` tool, the answer renders a pretty, NCGR-themed interactive map
+  (MapLibre GL) with routes, markers, traffic incidents, and isochrones — Riyadh-
   centered and UAE-bounded. See [`docs/tomtom-agent.md`](docs/tomtom-agent.md).
 
 ## Architecture
 
 ```
-Browser (React + Vite + Tailwind — same look as the reports chatbot, RTA theme)
+Browser (React + Vite + Tailwind — same look as the reports chatbot, NCGR theme)
    │  /api/*  (same-origin in prod, Vite proxy in dev)
    ▼
 FastAPI backend (token management + thin proxy)
